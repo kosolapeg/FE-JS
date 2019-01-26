@@ -1,4 +1,5 @@
 'use strict';
+
 let userInput = 0;
 const numbers = [];
 let total = 0;
@@ -17,11 +18,11 @@ do {
       numbers.push(validNumber);
     }
   }
-} while (userInput !== null);
+} while (true); // <---- ты уже сделала выход из цыкла в 10-11 строке, можно оставить while (true)
 
-if (numbers.length > 0) {
-  for (const value of numbers) {
-    total = total + value;
+if (numbers.length > 0) { 
+  for (const number of numbers) { // <---- массив называй в множетсвенном числе, а его элементы - в единственном, так удобней читать/понимать код
+     total = total + number;
   }
 }
 alert(`Общая сумма чисел равна ${total}`);
