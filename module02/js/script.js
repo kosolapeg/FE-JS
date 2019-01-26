@@ -1,8 +1,9 @@
 'use strict';
 
-let userInput = 0;
+let userInput = 0; // можно просто объявить типа и сразу обе let userInput, userNumber; чтобы потом не создавать тучу раз
 const numbers = [];
 let total = 0;
+
 
 do {
   userInput = prompt('Введите число');
@@ -10,7 +11,8 @@ do {
   if (userInput === null) {
     break;
   } else {
-    let validNumber = Number(userInput);
+    validNumber = Number(userInput); // Переменные в цикле лучше не объявлять, лучше сделать это снаружи, 
+                                     // чтобы при каждом проходе цикла она не создавалась заново
 
     if (Number.isNaN(validNumber)) {
       alert('Было введено не число, попробуйте еще раз');
