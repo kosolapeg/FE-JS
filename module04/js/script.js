@@ -25,11 +25,12 @@ const notepad = {
      * Возвращает: заметку с совпавшим полем id или undefined если ничего не найдено
      */
     for (const element of notepad.notes) {
+      // <WARNING!!!!! Правильней по смыслу будет использовать вместо element переменную note, что-бы он был читаемый. Ты всегда будешь перебирать элементы, для этого и существуют циклы. Здесь мы перебираем записки, и каждый раз у нас текущая записка. То есть из notes текущая - note. Имена по смыслу и содержанию
       if (element.id === id) {
         return element;
       }
     }
-    return undefined;
+    return undefined; // <WARNING!!!!! Это лишнее, метод по умолчанию если ничего нечего ретернуть, вернет андефанд
   },
   saveNote(note) {
     /*
@@ -39,7 +40,7 @@ const notepad = {
      * Возвращает: сохраненную заметку
      */
     notepad.notes.push(note);
-    return note;
+    return note; // <WARNING!!!!! ты тут возвращаешь то что вводные данные, каков хитрый замысел, нужно просто, note закинуть в "базу" - в нашем случае d массив объектов notepad.notes - и все тут, возвращать ничего не нужно
   },
   deleteNote(id) {
     /*
@@ -68,6 +69,23 @@ const notepad = {
      */
 
     return Object.assign(notepad.findNoteById(id), updatedContent);
+
+    /*   ^^^
+     *   ^^^
+     *   ^^^
+     *   ^^^
+     *   GOOD
+     *
+     *   Но потихоньку хорошо-бы переходить на современные плюшки и синтаксический сахар,
+     *    типа:
+     *
+     *   const note = notepad.findNoteById(id);
+     *   if (!note) return; если не нашли - тупо выходим, обрываем выполнение метода и возвращаем undefined
+     *   return {...note, ...updatedContent} распыляем, копируем все новое в note и возвращаем обновленный
+     *
+     *
+     *
+     */
   },
   updateNotePriority(id, priority) {
     /*
@@ -77,7 +95,17 @@ const notepad = {
      * Возвращает: обновленную заметку
      */
 
-    return (notepad.findNoteById(id).priority = priority);
+    return (notepad.findNoteById(id).priority = priority); //????
+
+    /* Чо ты тут возвращаешь, новый приоритет? а нам нужно?
+     * И лучше код писать развернутей для читаемости - нет ничего плохого в доп. переменных, например:
+     *
+     * const note = notepad.findNoteById(id);
+     * if (!note) return;
+     * note.priority = priority;
+     * return note;
+     *
+     */
   },
   filterNotesByQuery(query) {
     /*
@@ -98,6 +126,12 @@ const notepad = {
       }
     }
     return notesByQuery;
+    /*
+     * Правильно ли сработает метод filterNotesByQuery если через параметр query,
+     * передадут например значение 'HtMl'?
+     *
+     *
+     */
   },
 
   filterNotesByPriority(priority) {
