@@ -14,7 +14,7 @@ const notepad = {
      * Принимает: ничего
      * Возвращает: все заметки, значение свойства notes
      */
-    return notepad.notes;
+    return this.notes;
   },
 
   findNoteById(id) {
@@ -24,12 +24,11 @@ const notepad = {
      * Принимает: идентификатор заметки
      * Возвращает: заметку с совпавшим полем id или undefined если ничего не найдено
      */
-    for (const element of notepad.notes) {
-      if (element.id === id) {
-        return element;
+    for (const note of this.notes) {
+      if (note.id === id) {
+        return note;
       }
     }
-    return undefined;
   },
   saveNote(note) {
     /*
@@ -38,7 +37,7 @@ const notepad = {
      * Принимает: объект заметки
      * Возвращает: сохраненную заметку
      */
-    notepad.notes.push(note);
+    this.notes.push(note);
     return note;
   },
   deleteNote(id) {
@@ -49,10 +48,9 @@ const notepad = {
      * Возвращает: ничего
      */
 
-    for (let i = 0; i < notepad.notes.length; i += 1) {
-      if (notepad.notes[i].id === id) {
-        notepad.notes.splice(i, 1);
-        return;
+    for (let i = 0; i < this.notes.length; i += 1) {
+      if (this.notes[i].id === id) {
+        this.notes.splice(i, 1);
       }
     }
   },
@@ -66,8 +64,10 @@ const notepad = {
      * Принимает: идентификатор заметки и объект, полями которого надо обновить заметку
      * Возвращает: обновленную заметку
      */
+    const note = this.findNoteById(id);
+    if (!note) return;
 
-    return Object.assign(notepad.findNoteById(id), updatedContent);
+    return { ...note, ...updatedContent };
   },
   updateNotePriority(id, priority) {
     /*
@@ -76,8 +76,10 @@ const notepad = {
      * Принимает: идентификатор заметки и ее новый приоритет
      * Возвращает: обновленную заметку
      */
-
-    return (notepad.findNoteById(id).priority = priority);
+    const note = this.findNoteById(id);
+    if (!note) return;
+    note.priority = priority;
+    return note;
   },
   filterNotesByQuery(query) {
     /*
@@ -89,12 +91,13 @@ const notepad = {
      */
     const notesByQuery = [];
 
-    for (const element of notepad.notes) {
-      let { title, body } = element;
+    for (const note of this.notes) {
+      let { title, body } = note;
       title = title.toLowerCase();
       body = body.toLowerCase();
+      query = query.toLowerCase();
       if (title.includes(query) || body.includes(query)) {
-        notesByQuery.push(element);
+        notesByQuery.push(note);
       }
     }
     return notesByQuery;
@@ -109,9 +112,9 @@ const notepad = {
      * Возвращает: новый массив заметок с подходящим приоритетом*/
 
     const notesByPriority = [];
-    for (const element of notepad.notes) {
-      if (element.priority === priority) {
-        notesByPriority.push(element);
+    for (const note of this.notes) {
+      if (note.priority === priority) {
+        notesByPriority.push(note);
       }
     }
     return notesByPriority;
@@ -206,5 +209,3 @@ console.log(
 
 notepad.deleteNote(2);
 console.log('Заметки после удаления с id 2: ', notepad.getNotes());
-
-console.log(notepad.findNoteById(5));
