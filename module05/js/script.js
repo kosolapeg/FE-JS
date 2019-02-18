@@ -82,12 +82,7 @@ Notepad.PRIORITIES = {
 };
 
 Notepad.getPriorityName = function(priorityId) {
-  for (const key in this.PRIORITIES) {
-    const priority = this.PRIORITIES[key];
-    if (priority.id === priorityId) {
-      return priority.name;
-    }
-  }
+  return Notepad.PRIORITIES[priorityId].name;
 };
 
 /*
