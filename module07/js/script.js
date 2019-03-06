@@ -1,7 +1,6 @@
 'use strict';
 
-const users = [
-  {
+const users = [{
     id: '701b29c3-b35d-4cf1-a5f6-8b12b29a5081',
     name: 'Moore Hensley',
     email: 'moorehensley@indexia.com',
@@ -99,6 +98,7 @@ console.log(getUsersByEyeColor(users, 'blue')); // [объект Moore Hensley, 
 
 const getUsersByGender = (users, gender) =>
   users.filter(user => user.gender === gender).map(user => user.name);
+// А зачем здесь еще и map? Что у нас вернет filter?
 
 console.log(getUsersByGender(users, 'male')); // [ 'Moore Hensley', 'Ross Vazquez', 'Carey Barr', 'Blackburn Dotson' ]
 
@@ -135,6 +135,9 @@ const getUsersByFriend = (users, name) =>
 console.log(getUsersByFriend(users, 'Briana Decker')); // [ 'Sharlene Bush', 'Sheree Anthony' ]
 console.log(getUsersByFriend(users, 'Goldie Gentry')); // [ 'Elma Head', 'Sheree Anthony' ]
 
+// Обрати внимание какой результат требуется вывести, это массив имен пользавателей у которых есть такой дргу. Нужно немножко доделать, вытащить только имена, можешь дальше через точку (Цепочки вызовов методов массива)
+
+
 //Additional
 
 const getUniqueSkills = users => {
@@ -146,7 +149,7 @@ const getUniqueSkills = users => {
   const uniqueSkills = allSkills.reduce((skills, skill) => {
     if (!skills.includes(skill)) {
       skills.push(skill);
-      return skills;
+      return skills; //!!!! - А зачем?
     }
     return skills;
   }, []);
@@ -155,12 +158,22 @@ const getUniqueSkills = users => {
   return sortSkills;
 };
 
+
 console.log(getUniqueSkills(users));
 // [ 'adipisicing', 'amet', 'anim', 'commodo', 'culpa', 'elit', 'ex', 'ipsum', 'irure', 'laborum', 'lorem', 'mollit', 'non', 'nostrud', 'nulla', 'proident', 'tempor', 'velit', 'veniam' ]
 
+/* Опять же попробуй реализовать все через цепочку вызовов методов массива), кстати загляни ко мне посмотри, я поигрался/пообщался/поискал и реализовал 4 вариант решения 
+https://github.com/ArtVal1988/js-group-9-10/tree/master/Module_07/additional/js
+
+а про второе доп. вообще забыл ггг) но твое проверим
+ */
+
 const getNamesSortedByFriendsCount = users => {
   const namesAndFriends = users.reduce((allNamesAndFriends, user) => {
-    allNamesAndFriends.push({ name: user.name, friends: user.friends.length });
+    allNamesAndFriends.push({
+      name: user.name,
+      friends: user.friends.length
+    });
     return allNamesAndFriends;
   }, []);
 
@@ -176,3 +189,13 @@ const getNamesSortedByFriendsCount = users => {
 
 console.log(getNamesSortedByFriendsCount(users));
 // [ 'Moore Hensley', 'Sharlene Bush', 'Elma Head', 'Carey Barr', 'Blackburn Dotson', 'Sheree Anthony', 'Ross Vazquez' ]
+
+/* 
+1. Через цепочку вызовов методов массива);
+2. Попробуй реализовать все без создания нового массива объектов, я пока сам не знаю как - но выглядит это лишним.
+Я параллельно таки доделаю сам доп. второй и потом сравним решения
+
+ОК? На звязочку!
+
+
+ */
