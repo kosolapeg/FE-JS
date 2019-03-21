@@ -130,7 +130,7 @@ const getTotalBalance = users =>
 console.log(getTotalBalance(users)); // 20916
 
 const getUsersByFriend = (users, name) =>
-  users.filter(user => user.friends.includes(name));
+  users.filter(user => user.friends.includes(name)).map(user => user.name);
 
 console.log(getUsersByFriend(users, 'Briana Decker')); // [ 'Sharlene Bush', 'Sheree Anthony' ]
 console.log(getUsersByFriend(users, 'Goldie Gentry')); // [ 'Elma Head', 'Sheree Anthony' ]
@@ -138,40 +138,32 @@ console.log(getUsersByFriend(users, 'Goldie Gentry')); // [ 'Elma Head', 'Sheree
 //Additional
 
 const getUniqueSkills = users => {
-  const allSkills = users.reduce((skills, user) => {
-    skills.push(...user.skills);
-    return skills;
-  }, []);
-
-  const uniqueSkills = allSkills.reduce((skills, skill) => {
-    if (!skills.includes(skill)) {
-      skills.push(skill);
+  return users
+    .reduce((skills, user) => {
+      skills.push(...user.skills);
       return skills;
-    }
-    return skills;
-  }, []);
-
-  const sortSkills = uniqueSkills.sort();
-  return sortSkills;
+    }, [])
+    .reduce((skills, skill) => {
+      if (!skills.includes(skill)) skills.push(skill);
+      return skills;
+    }, [])
+    .sort();
 };
 
 console.log(getUniqueSkills(users));
 // [ 'adipisicing', 'amet', 'anim', 'commodo', 'culpa', 'elit', 'ex', 'ipsum', 'irure', 'laborum', 'lorem', 'mollit', 'non', 'nostrud', 'nulla', 'proident', 'tempor', 'velit', 'veniam' ]
 
 const getNamesSortedByFriendsCount = users => {
-  const namesAndFriends = users.reduce((allNamesAndFriends, user) => {
-    allNamesAndFriends.push({ name: user.name, friends: user.friends.length });
-    return allNamesAndFriends;
-  }, []);
-
-  const namesAndFriendsSorted = namesAndFriends.sort(
-    (a, b) => a.friends - b.friends,
-  );
-
-  const namesSortedByFriendsCount = namesAndFriendsSorted.map(
-    user => user.name,
-  );
-  return namesSortedByFriendsCount;
+  return users
+    .reduce((allNamesAndFriends, user) => {
+      allNamesAndFriends.push({
+        name: user.name,
+        friends: user.friends.length,
+      });
+      return allNamesAndFriends;
+    }, [])
+    .sort((a, b) => a.friends - b.friends)
+    .map(user => user.name);
 };
 
 console.log(getNamesSortedByFriendsCount(users));
