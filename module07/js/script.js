@@ -99,6 +99,7 @@ console.log(getUsersByEyeColor(users, 'blue')); // [объект Moore Hensley, 
 const getUsersByGender = (users, gender) =>
   users.filter(user => user.gender === gender).map(user => user.name);
 // А зачем здесь еще и map? Что у нас вернет filter?
+// Для того чтобы вынести в массив отдельно только имена игроков
 
 console.log(getUsersByGender(users, 'male')); // [ 'Moore Hensley', 'Ross Vazquez', 'Carey Barr', 'Blackburn Dotson' ]
 
