@@ -131,32 +131,27 @@ const getTotalBalance = users =>
 console.log(getTotalBalance(users)); // 20916
 
 const getUsersByFriend = (users, name) =>
-  users.filter(user => user.friends.includes(name));
+  users.filter(user => user.friends.includes(name)).map(user=>user.name);
 
 console.log(getUsersByFriend(users, 'Briana Decker')); // [ 'Sharlene Bush', 'Sheree Anthony' ]
 console.log(getUsersByFriend(users, 'Goldie Gentry')); // [ 'Elma Head', 'Sheree Anthony' ]
 
 // Обрати внимание какой результат требуется вывести, это массив имен пользавателей у которых есть такой дргу. Нужно немножко доделать, вытащить только имена, можешь дальше через точку (Цепочки вызовов методов массива)
-
+//Ты прав, здесь я просто затупила. Уже исправила.
 
 //Additional
 
 const getUniqueSkills = users => {
-  const allSkills = users.reduce((skills, user) => {
-    skills.push(...user.skills);
-    return skills;
-  }, []);
-
-  const uniqueSkills = allSkills.reduce((skills, skill) => {
-    if (!skills.includes(skill)) {
-      skills.push(skill);
-      return skills; //!!!! - А зачем?
-    }
-    return skills;
-  }, []);
-
-  const sortSkills = uniqueSkills.sort();
-  return sortSkills;
+  return users
+    .reduce((skills, user) => {
+      skills.push(...user.skills);
+      return skills;
+    }, [])
+    .reduce((skills, skill) => {
+      if (!skills.includes(skill)) skills.push(skill);
+      return skills;
+    }, [])
+    .sort();
 };
 
 
@@ -165,29 +160,24 @@ console.log(getUniqueSkills(users));
 
 /* Опять же попробуй реализовать все через цепочку вызовов методов массива), кстати загляни ко мне посмотри, я поигрался/пообщался/поискал и реализовал 4 вариант решения 
 https://github.com/ArtVal1988/js-group-9-10/tree/master/Module_07/additional/js
+Ну ты гений!!! первый способ не поянла, 3 остальных очень интересные 
+Сделала цепочку!!!
 
 а про второе доп. вообще забыл ггг) но твое проверим
  */
 
 const getNamesSortedByFriendsCount = users => {
-  const namesAndFriends = users.reduce((allNamesAndFriends, user) => {
-    allNamesAndFriends.push({
-      name: user.name,
-      friends: user.friends.length
-    });
-    return allNamesAndFriends;
-  }, []);
-
-  const namesAndFriendsSorted = namesAndFriends.sort(
-    (a, b) => a.friends - b.friends,
-  );
-
-  const namesSortedByFriendsCount = namesAndFriendsSorted.map(
-    user => user.name,
-  );
-  return namesSortedByFriendsCount;
+  return users
+    .reduce((allNamesAndFriends, user) => {
+      allNamesAndFriends.push({
+        name: user.name,
+        friends: user.friends.length,
+      });
+      return allNamesAndFriends;
+    }, [])
+    .sort((a, b) => a.friends - b.friends)
+    .map(user => user.name);
 };
-
 console.log(getNamesSortedByFriendsCount(users));
 // [ 'Moore Hensley', 'Sharlene Bush', 'Elma Head', 'Carey Barr', 'Blackburn Dotson', 'Sheree Anthony', 'Ross Vazquez' ]
 
@@ -200,3 +190,4 @@ console.log(getNamesSortedByFriendsCount(users));
 
 
  */
+Вроди все исправила!!!
