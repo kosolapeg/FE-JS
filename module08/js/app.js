@@ -63,12 +63,12 @@ console.log(notepad.notes);
 
 const createNoteContent = note => {
   const noteContent = document.createElement('div');
-  noteContent.classList.add('note_content');
+  noteContent.classList.add('note__content');
   const noteTitle = document.createElement('h2');
-  noteTitle.classList.add('note_title');
+  noteTitle.classList.add('note__title');
   noteTitle.textContent = note.title;
   const noteBody = document.createElement('p');
-  noteBody.classList.add('note_body');
+  noteBody.classList.add('note__body');
   noteBody.textContent = note.body;
   noteContent.appendChild(noteTitle);
   noteContent.appendChild(noteBody);
@@ -77,7 +77,7 @@ const createNoteContent = note => {
 
 const createIncreasePriority = () => {
   const buttonIncreasePriority = document.createElement('button');
-  buttonIncreasePriority.classList.add = 'action';
+  buttonIncreasePriority.classList.add('action');
   buttonIncreasePriority.dataset.action = NOTE_ACTIONS.INCREASE_PRIORITY;
   const expandLess = document.createElement('i');
   expandLess.classList.add('material-icons');
@@ -89,7 +89,7 @@ const createIncreasePriority = () => {
 
 const createDecreasePriority = () => {
   const buttonDecreasePriority = document.createElement('button');
-  buttonDecreasePriority.classList.add = 'action';
+  buttonDecreasePriority.classList.add('action');
   buttonDecreasePriority.dataset.action = NOTE_ACTIONS.DECREASE_PRIORITY;
   const expandMore = document.createElement('i');
   expandMore.classList.add('material-icons');
@@ -125,16 +125,16 @@ const createDeleteNote = () => {
 
 const createNoteFooter = note => {
   const noteFooter = document.createElement('footer');
-  noteFooter.classList.add('note_footer');
+  noteFooter.classList.add('note__footer');
   const noteSectionDecreaseIncrease = document.createElement('section');
-  noteSectionDecreaseIncrease.classList.add('note_section');
+  noteSectionDecreaseIncrease.classList.add('note__section');
   const buttonDecrease = createDecreasePriority();
   const buttonIncrease = createIncreasePriority();
   const notePriority = document.createElement('span');
-  notePriority.classList.add('note_priority');
+  notePriority.classList.add('note__priority');
   notePriority.textContent = `Priority: ${note.priority}`;
   const noteSectionEditDelete = document.createElement('section');
-  noteSectionEditDelete.classList.add('note_section');
+  noteSectionEditDelete.classList.add('note__section');
   const buttonEdit = createEditNote();
   const buttonDelete = createDeleteNote();
   noteSectionDecreaseIncrease.appendChild(buttonDecrease);
@@ -149,7 +149,7 @@ const createNoteFooter = note => {
 
 const createListItem = note => {
   const noteListItem = document.createElement('li');
-  noteListItem.classList.add('note_list__item');
+  noteListItem.classList.add('note-list__item');
   noteListItem.dataset.id = note.id;
   const noteDiv = document.createElement('div');
   noteDiv.classList.add('note');
