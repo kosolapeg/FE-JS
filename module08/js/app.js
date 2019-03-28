@@ -75,52 +75,16 @@ const createNoteContent = note => {
   return noteContent;
 };
 
-const createIncreasePriority = () => {
-  const buttonIncreasePriority = document.createElement('button');
-  buttonIncreasePriority.classList.add('action');
-  buttonIncreasePriority.dataset.action = NOTE_ACTIONS.INCREASE_PRIORITY;
+const createActionButton = (action, icon) => {
+  const btn = document.createElement('button');
+  btn.classList.add('action');
+  btn.dataset.action = action;
   const expandLess = document.createElement('i');
   expandLess.classList.add('material-icons');
   expandLess.classList.add('action__icon');
-  expandLess.textContent = ICON_TYPES.ARROW_UP;
-  buttonIncreasePriority.appendChild(expandLess);
-  return buttonIncreasePriority;
-};
-
-const createDecreasePriority = () => {
-  const buttonDecreasePriority = document.createElement('button');
-  buttonDecreasePriority.classList.add('action');
-  buttonDecreasePriority.dataset.action = NOTE_ACTIONS.DECREASE_PRIORITY;
-  const expandMore = document.createElement('i');
-  expandMore.classList.add('material-icons');
-  expandMore.classList.add('action__icon');
-  expandMore.textContent = ICON_TYPES.ARROW_DOWN;
-  buttonDecreasePriority.appendChild(expandMore);
-  return buttonDecreasePriority;
-};
-
-const createEditNote = () => {
-  const buttonEditNote = document.createElement('button');
-  buttonEditNote.classList.add('action');
-  buttonEditNote.dataset.action = NOTE_ACTIONS.EDIT;
-  const iconEdit = document.createElement('i');
-  iconEdit.classList.add('material-icons');
-  iconEdit.classList.add('action__icon');
-  iconEdit.textContent = ICON_TYPES.EDIT;
-  buttonEditNote.appendChild(iconEdit);
-  return buttonEditNote;
-};
-
-const createDeleteNote = () => {
-  const buttonDeleteNote = document.createElement('button');
-  buttonDeleteNote.classList.add('action');
-  buttonDeleteNote.dataset.action = NOTE_ACTIONS.DELETE;
-  const iconDelete = document.createElement('i');
-  iconDelete.classList.add('material-icons');
-  iconDelete.classList.add('action__icon');
-  iconDelete.textContent = ICON_TYPES.DELETE;
-  buttonDeleteNote.appendChild(iconDelete);
-  return buttonDeleteNote;
+  expandLess.textContent = icon;
+  btn.appendChild(expandLess);
+  return btn;
 };
 
 const createNoteFooter = note => {
@@ -128,15 +92,24 @@ const createNoteFooter = note => {
   noteFooter.classList.add('note__footer');
   const noteSectionDecreaseIncrease = document.createElement('section');
   noteSectionDecreaseIncrease.classList.add('note__section');
-  const buttonDecrease = createDecreasePriority();
-  const buttonIncrease = createIncreasePriority();
+  const buttonDecrease = createActionButton(
+    NOTE_ACTIONS.DECREASE_PRIORITY,
+    ICON_TYPES.ARROW_DOWN,
+  );
+  const buttonIncrease = createActionButton(
+    NOTE_ACTIONS.INCREASE_PRIORITY,
+    ICON_TYPES.ARROW_UP,
+  );
   const notePriority = document.createElement('span');
   notePriority.classList.add('note__priority');
   notePriority.textContent = `Priority: ${note.priority}`;
   const noteSectionEditDelete = document.createElement('section');
   noteSectionEditDelete.classList.add('note__section');
-  const buttonEdit = createEditNote();
-  const buttonDelete = createDeleteNote();
+  const buttonEdit = createActionButton(NOTE_ACTIONS.EDIT, ICON_TYPES.EDIT);
+  const buttonDelete = createActionButton(
+    NOTE_ACTIONS.DELETE,
+    ICON_TYPES.DELETE,
+  );
   noteSectionDecreaseIncrease.appendChild(buttonDecrease);
   noteSectionDecreaseIncrease.appendChild(buttonIncrease);
   noteSectionDecreaseIncrease.appendChild(notePriority);
