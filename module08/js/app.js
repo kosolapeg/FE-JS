@@ -61,17 +61,16 @@ class Notepad {
 const notepad = new Notepad(initialNotes);
 console.log(notepad.notes);
 
-const createNoteContent = note => {
+const createNoteContent = ({ id, title, body, priority }) => {
   const noteContent = document.createElement('div');
   noteContent.classList.add('note__content');
   const noteTitle = document.createElement('h2');
   noteTitle.classList.add('note__title');
-  noteTitle.textContent = note.title;
+  noteTitle.textContent = title;
   const noteBody = document.createElement('p');
   noteBody.classList.add('note__body');
-  noteBody.textContent = note.body;
-  noteContent.appendChild(noteTitle);
-  noteContent.appendChild(noteBody);
+  noteBody.textContent = body;
+  noteContent.append(noteTitle, noteBody);
   return noteContent;
 };
 
@@ -79,15 +78,14 @@ const createActionButton = (action, icon) => {
   const btn = document.createElement('button');
   btn.classList.add('action');
   btn.dataset.action = action;
-  const expandLess = document.createElement('i');
-  expandLess.classList.add('material-icons');
-  expandLess.classList.add('action__icon');
-  expandLess.textContent = icon;
-  btn.appendChild(expandLess);
+  const iconType = document.createElement('i');
+  iconType.classList.add('material-icons', 'action__icon');
+  iconType.textContent = icon;
+  btn.appendChild(iconType);
   return btn;
 };
 
-const createNoteFooter = note => {
+const createNoteFooter = ({ id, title, body, priority }) => {
   const noteFooter = document.createElement('footer');
   noteFooter.classList.add('note__footer');
   const noteSectionDecreaseIncrease = document.createElement('section');
@@ -102,7 +100,7 @@ const createNoteFooter = note => {
   );
   const notePriority = document.createElement('span');
   notePriority.classList.add('note__priority');
-  notePriority.textContent = `Priority: ${note.priority}`;
+  notePriority.textContent = `Priority: ${priority}`;
   const noteSectionEditDelete = document.createElement('section');
   noteSectionEditDelete.classList.add('note__section');
   const buttonEdit = createActionButton(NOTE_ACTIONS.EDIT, ICON_TYPES.EDIT);
@@ -110,26 +108,25 @@ const createNoteFooter = note => {
     NOTE_ACTIONS.DELETE,
     ICON_TYPES.DELETE,
   );
-  noteSectionDecreaseIncrease.appendChild(buttonDecrease);
-  noteSectionDecreaseIncrease.appendChild(buttonIncrease);
-  noteSectionDecreaseIncrease.appendChild(notePriority);
-  noteSectionEditDelete.appendChild(buttonEdit);
-  noteSectionEditDelete.appendChild(buttonDelete);
-  noteFooter.appendChild(noteSectionDecreaseIncrease);
-  noteFooter.appendChild(noteSectionEditDelete);
+  noteSectionDecreaseIncrease.append(
+    buttonDecrease,
+    buttonIncrease,
+    notePriority,
+  );
+  noteSectionEditDelete.append(buttonEdit, buttonDelete);
+  noteFooter.append(noteSectionDecreaseIncrease, noteSectionEditDelete);
   return noteFooter;
 };
 
-const createListItem = note => {
+const createListItem = ({ id, title, body, priority }) => {
   const noteListItem = document.createElement('li');
   noteListItem.classList.add('note-list__item');
-  noteListItem.dataset.id = note.id;
+  noteListItem.dataset.id = id;
   const noteDiv = document.createElement('div');
   noteDiv.classList.add('note');
-  const noteContent = createNoteContent(note);
-  const footer = createNoteFooter(note);
-  noteDiv.appendChild(noteContent);
-  noteDiv.appendChild(footer);
+  const noteContent = createNoteContent({ id, title, body, priority });
+  const footer = createNoteFooter({ id, title, body, priority });
+  noteDiv.append(noteContent, footer);
   noteListItem.appendChild(noteDiv);
   return noteListItem;
 };
