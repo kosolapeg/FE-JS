@@ -50,6 +50,7 @@ const initialNotes = [
     priority: PRIORITY_TYPES.LOW,
   },
 ];
+
 class Notepad {
   static generateUniqueId = () =>
     Math.random()
@@ -82,6 +83,11 @@ const notepad = new Notepad(initialNotes);
 //console.log(notepad.notes);
 
 const createNoteContent = ({ id, title, body, priority }) => {
+  
+  // РЕМАРКИ:
+  // вытягивай только то что нужно, в данном случае тебе нужны только title, body
+  // createNoteContent = ({title, body})
+  
   const noteContent = document.createElement('div');
   noteContent.classList.add('note__content');
   const noteTitle = document.createElement('h2');
@@ -106,6 +112,11 @@ const createActionButton = (action, icon) => {
 };
 
 const createNoteFooter = ({ id, title, body, priority }) => {
+  
+  // РЕМАРКИ:
+  // аналогично, вытягивай только то что нужно, в данном случае тебе нужно только priority
+  // 
+  
   const noteFooter = document.createElement('footer');
   noteFooter.classList.add('note__footer');
   const noteSectionDecreaseIncrease = document.createElement('section');
@@ -121,6 +132,12 @@ const createNoteFooter = ({ id, title, body, priority }) => {
   const notePriority = document.createElement('span');
   notePriority.classList.add('note__priority');
   notePriority.textContent = `Priority: ${priority}`;
+  
+  // Подсказка, как реализовать приоритет словом:
+  // напиши статический метод что-бы вверху по номеру priority можно было получить название приоритета 
+  // вызываться будет как-то так notePriority.textContent = `Priority: ${Notepad.getPriorityName(priority)}`;
+  
+  
   const noteSectionEditDelete = document.createElement('section');
   noteSectionEditDelete.classList.add('note__section');
   const buttonEdit = createActionButton(NOTE_ACTIONS.EDIT, ICON_TYPES.EDIT);
